@@ -59,6 +59,34 @@
                                     />
                                 </div>
                             </div>
+                            <div class="col-md-3 has-required">
+                                <div
+                                    class="form-group"
+                                    v-bind:class="formGroupClass($v, 'metadados.funcionarios')"
+                                >
+                                    <label class="control-label" for="funcionarios">Número de funcionários</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="funcionarios"
+                                        v-model.trim="inscricao.metadados.funcionarios"
+                                        maxlength="50"
+                                        @input="$v.inscricao.metadados.funcionarios.$touch()"
+                                        required="required"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="funcionarios">&nbsp;</label>
+                                    <div class="checkbox">
+                                        <label class="control-label">
+                                            <input type="checkbox" value="1" v-model="inscricao.metadados.associado">
+                                            Empresa associada ao CDL Natal
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-5 has-required">
@@ -375,6 +403,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="checkbox">
+                                <label class="control-label">
+                                    <input type="checkbox" value="1" v-model="inscricao.metadados.comunicacao">
+                                    Marque para receber informações com benefícios e condições especiais dos parceiros CDL Natal para a sua empresa.
+                                </label>
+                            </div>
+                        </div>
                         <div class="row" v-if="!editMode">
                             <div class="col-md-12">
                                 <div class="form-group text-right">
@@ -468,7 +504,10 @@ export default {
                 uf: "RN",
                 metadados: {
                     nome_fantasia: "",
-                    nome_representante: ""
+                    nome_representante: "",
+                    comunicacao: false,
+                    funcionarios: "",
+                    associado: false
                 }
             }
         };
@@ -511,7 +550,10 @@ export default {
                     window.location.reload();
                 },
                 error: function(data, textStatus, jqXHR) {
-                    toastr.error(data.responseText);
+                    let resultMessage = data.responseText;
+                    const strTok = 'O nome precisa conter pelo menos duas palavras para ser aceito pelo PagSeguro.';
+                    resultMessage = resultMessage.replace(strTok, 'A razão social precisa conter pelo menos duas palavras.');
+                    toastr.error(resultMessage);
                 },
                 complete: function(data, textStatus, jqXHR) {
                     diz.sending = false;
@@ -545,7 +587,10 @@ export default {
                     toastr.success("Seus dados foram salvos.");
                 },
                 error: function(data, textStatus, jqXHR) {
-                    toastr.error(data.responseText);
+                    let resultMessage = data.responseText;
+                    const strTok = 'O nome precisa conter pelo menos duas palavras para ser aceito pelo PagSeguro.';
+                    resultMessage = resultMessage.replace(strTok, 'A razão social precisa conter pelo menos duas palavras.');
+                    toastr.error(resultMessage);
                 },
                 complete: function(data, textStatus, jqXHR) {
                     diz.sending = false;
@@ -671,6 +716,9 @@ export default {
         },
         "inscricao.documento_tipo": function(val) {
             this.adjustDocumentoField();
+        },
+        "inscricao.metadados.funcionarios": function(val) {
+            this.inscricao.metadados.funcionarios = val.replace(/[^0-9]/g, '');
         },
         "inscricao.documento": function(val) {
             if (val.length === 14 && this.inscricao.documento_tipo === "CPF") {
@@ -866,6 +914,9 @@ export default {
                 maxLength: maxLength(50)
             },
             metadados: {
+                funcionarios: {
+                    required
+                },
                 nome_fantasia: {
                     required
                 },

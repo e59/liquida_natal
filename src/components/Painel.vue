@@ -157,6 +157,18 @@
                   <td>{{ $store.state.user.metadados.nome_representante }}</td>
                 </tr>
                 <tr>
+                  <th>Número de funcionarios</th>
+                  <td>{{ $store.state.user.metadados.funcionarios }}</td>
+                </tr>
+                <tr>
+                  <th>Associado</th>
+                  <td>{{ formatBool($store.state.user.metadados.associado) }}</td>
+                </tr>
+                <tr>
+                  <th>Receber informações</th>
+                  <td>{{ formatBool($store.state.user.metadados.comunicacao) }}</td>
+                </tr>
+                <tr>
                   <th>Email</th>
                   <td>{{ $store.state.user.email }}</td>
                 </tr>
@@ -171,10 +183,6 @@
                 <tr>
                   <th>Documento</th>
                   <td>{{ $store.state.user.documento }}</td>
-                </tr>
-                <tr>
-                  <th>Data de nascimento</th>
-                  <td>{{ formatDate($store.state.user.nascimento) }}</td>
                 </tr>
                 <tr>
                   <th>Telefone</th>
@@ -420,6 +428,9 @@ export default {
                 },
                 dataType: "JSON"
             });
+        },
+        formatBool: function(val) {
+            return val ? 'Sim' : 'Não';
         },
         formatDate: function(val) {
             return moment(val, "YYYY-MM-DD").format("L");
