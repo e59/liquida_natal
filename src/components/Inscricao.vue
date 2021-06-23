@@ -11,13 +11,24 @@
                         <div class="row" v-if="errors">
                             <div class="col-md-12" v-html="errors"></div>
                         </div>
-                        <div class="row">
+                        <div class="row" style="margin-bottom: 3rem;">
                             <div class="col-md-12 has-required">
                                 <div class="checkbox">
                                     <label class="control-label">
                                         <input type="checkbox" value="1" v-model="aceito">
-                                        Aceito os <a href="https://www.lojistaliquidanatal.com.br/wp-content/uploads/2021/06/Termo-de-aceite-HC.pdf" target="_blank">termos de adesão a condições de participação para a Campanha Líquida Natal 2021</a>.
+                                        Aceito os <a href="https://www.lojistaliquidanatal.com.br/wp-content/uploads/2021/06/Termo-de-aceite-HC.pdf" target="_blank">termos de adesão, as condições de participação para a Campanha Líquida Natal 2021 e a política de tratamento de dados</a>, nos limites das finalidades institucionais do CDL NATAL, observando o norteamento jurídico da Lei 13.709/2018 (LGPD).
                                     </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 3rem;">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="control-label" for="associado">SUA EMPRESA É ASSOCIADA AO CDL – NATAL?</label>
+                                    <select class="form-control" id="associado" v-model="inscricao.metadados.associado">
+                                        <option value="0">Não</option>
+                                        <option value="1">Sim</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -74,17 +85,6 @@
                                         @input="$v.inscricao.metadados.funcionarios.$touch()"
                                         required="required"
                                     />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label" for="funcionarios">&nbsp;</label>
-                                    <div class="checkbox">
-                                        <label class="control-label">
-                                            <input type="checkbox" value="1" v-model="inscricao.metadados.associado">
-                                            Empresa associada ao CDL Natal
-                                        </label>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -158,6 +158,9 @@
                                         @input="$v.inscricao.metadados.nome_representante.$touch()"
                                         required="required"
                                     />
+                                    <span class="help-block">
+                                        Nome da pessoa que está realizando o cadastro
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -507,7 +510,7 @@ export default {
                     nome_representante: "",
                     comunicacao: false,
                     funcionarios: "",
-                    associado: false
+                    associado: 0
                 }
             }
         };

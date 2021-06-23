@@ -14,7 +14,7 @@ import Navbar from "./components/Navbar";
 export default {
   data: function() {
     return {
-      brand: "LIQUIDA NATAL"
+      brand: "LIQUIDA NATAL – SISTEMA DE ADESÃO PARA LOJISTAS"
     };
   },
   components: {
