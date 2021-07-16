@@ -131,13 +131,15 @@
             <tbody>
                 <tr>
                     <th colspan="2" style="text-align: right">
+                        <!--
                         <div v-if="editing" class="btn-group btn-group-sm">
                             <a class="btn btn-default btn-sm" v-on:click="editBack">Voltar</a>
                         </div>
                         <div v-else>
                             <a class="btn btn-primary btn-sm" v-on:click="editForm">Editar dados</a>
                         </div>
-
+                        -->
+                        &nbsp;
                     </th>
                 </tr>
               <template v-if="editing">
